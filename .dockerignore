@@ -1,0 +1,12 @@
+.venv
+__pycache__
+*.py[cod]
+db.sqlite3
+db.sqlite3-journal
+.git
+.gitignore
+.ruff_cache
+.env
+*.log
+.vscode
+.idea
