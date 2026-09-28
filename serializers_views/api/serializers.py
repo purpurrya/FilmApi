@@ -56,6 +56,19 @@ class WatchlistSerializer(serializers.Serializer):
             )
         return super().validate(data)
 
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get("title", instance.title)
+        instance.storyline = validated_data.get("storyline", instance.storyline)
+        instance.active = instance.title = validated_data.get("active", instance.active)
+        instance.platform = validated_data.get("platform", instance.platform)
+        instance.imdb_rating = validated_data.get("imdb_rating", instance.imdb_rating)
+        instance.created = validated_data.get("created", instance.created)
+        instance.episodes = validated_data.get("episodes", instance.episodes)
+        instance.category = validated_data.get("category", instance.category)
+        instance.title = validated_data.get("storyline", instance.storyline)
+        instance.save()
+        return instance
+
 
 class ReviewSerializer(serializers.Serializer):
     review_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
