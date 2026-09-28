@@ -1,19 +1,80 @@
+from typing import ClassVar
+
 from django.contrib.auth import get_user_model
+from django.core.validators import MaxValueValidator, MinValueValidator
 from rest_framework import serializers
 
 from project_setup.models import StreamPlatform
+from serializers_views.api import fields as custom_fields
 from watchlist_app.models import WatchList
 
 User = get_user_model()
 
 
+class WatchlistModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
+        # fields = "__all__"
+        fields = ("title", "storyline", "platform", "imdb_rating")
+        extra_kwargs: ClassVar = {
+            "imdb_rating": {
+                "validators": [MinValueValidator(1.0), MaxValueValidator(10.0)]
+            }
+        }
+        serializer_related_field = custom_fields.CustomPrimaryKeyRelatedField
+
+    def validate_title(self, value):
+        if "@" in value:
+            serializers.ValidationError("Invalid Title")
+        return value
+
+    def validate_storyline(self, value):
+        if "@" in value:
+            serializers.ValidationError("Invalid Storyline")
+        return value
+
+    def validate_category(self, value):
+        if value not in ["MOVIE", "SERIES"]:
+            serializers.ValidationError("Not a valid category")
+        return value
+
+    def validate(self, data):
+        title = data.get("title", None)
+        storyline = data.get("storyline", None)
+        if (title and storyline) and (len(title) > len(storyline)):
+            raise serializers.ValidationError(
+                "Length of thetitle is bigger than storyline"
+            )
+        return super().validate(data)
+
+
 class StreamPlatformSerializer(serializers.Serializer):
+    class Meta:
+        model = StreamPlatform
+        fields = "__all__"
+        depth = 1
+        extra_kwargs: ClassVar = {
+            "about": {"allow_null": True, "default": ""},
+            "website": {"required": False},
+        }
+
     name = serializers.CharField(max_length=30)
     about = serializers.CharField(max_length=150)
     website = serializers.URLField(max_length=100)
+    watchlist = WatchlistModelSerializer(many=True, read_only=True)
 
 
 class WatchlistSerializer(serializers.Serializer):
+    full_title = serializers.SerializerMethodField()
+
+    class Meta:
+        model = WatchList
+        fields = "__all__"
+        read_only_fields = ("full_title",)
+
+    def get_full_title(self, obj):
+        return obj.full_title
+
     title = serializers.CharField(max_length=30)
     storyline = serializers.CharField(max_length=200)
     active = serializers.BooleanField()
@@ -44,36 +105,6 @@ class WatchlistSerializer(serializers.Serializer):
         instance.title = validated_data.get("storyline", instance.storyline)
         instance.save()
         return instance
-
-
-class WatchlistModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WatchList
-        fields = "__all__"
-
-    def validate_title(self, value):
-        if "@" in value:
-            serializers.ValidationError("Invalid Title")
-        return value
-
-    def validate_storyline(self, value):
-        if "@" in value:
-            serializers.ValidationError("Invalid Storyline")
-        return value
-
-    def validate_category(self, value):
-        if value not in ["MOVIE", "SERIES"]:
-            serializers.ValidationError("Not a valid category")
-        return value
-
-    def validate(self, data):
-        title = data.get("title", None)
-        storyline = data.get("storyline", None)
-        if (title and storyline) and (len(title) > len(storyline)):
-            raise serializers.ValidationError(
-                "Length of thetitle is bigger than storyline"
-            )
-        return super().validate(data)
 
 
 class ReviewSerializer(serializers.Serializer):
