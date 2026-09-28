@@ -32,6 +32,30 @@ class WatchlistSerializer(serializers.Serializer):
     def create(self, validated_data):
         return WatchList.objects.create(**validated_data)
 
+    def validate_title(self, value):
+        if "@" in value:
+            serializers.ValidationError("Invalid Title")
+        return value
+
+    def validate_storyline(self, value):
+        if "@" in value:
+            serializers.ValidationError("Invalid Storyline")
+        return value
+
+    def validate_category(self, value):
+        if value not in ["MOVIE", "SERIES"]:
+            serializers.ValidationError("Not a valid category")
+        return value
+
+    def validate(self, data):
+        title = data.get("title", None)
+        storyline = data.get("storyline", None)
+        if (title and storyline) and (len(title) > len(storyline)):
+            raise serializers.ValidationError(
+                "Length of thetitle is bigger than storyline"
+            )
+        return super().validate(data)
+
 
 class ReviewSerializer(serializers.Serializer):
     review_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())

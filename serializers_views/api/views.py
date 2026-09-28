@@ -10,9 +10,7 @@ from watchlist_app.models import Review, WatchList
 class WatchlistBasicSerializerView(APIView):
     def get(self, request, format=None):
         watchlist = WatchList.objects.all()
-        serializer = serializers.WatchlistSerializer(
-            watchlist, many=True, context={"request": request}
-        )
+        serializer = serializers.WatchlistSerializer(watchlist, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
