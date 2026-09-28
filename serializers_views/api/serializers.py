@@ -32,6 +32,25 @@ class WatchlistSerializer(serializers.Serializer):
     def create(self, validated_data):
         return WatchList.objects.create(**validated_data)
 
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get("title", instance.title)
+        instance.storyline = validated_data.get("storyline", instance.storyline)
+        instance.active = instance.title = validated_data.get("active", instance.active)
+        instance.platform = validated_data.get("platform", instance.platform)
+        instance.imdb_rating = validated_data.get("imdb_rating", instance.imdb_rating)
+        instance.created = validated_data.get("created", instance.created)
+        instance.episodes = validated_data.get("episodes", instance.episodes)
+        instance.category = validated_data.get("category", instance.category)
+        instance.title = validated_data.get("storyline", instance.storyline)
+        instance.save()
+        return instance
+
+
+class WatchlistModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
+        fields = "__all__"
+
     def validate_title(self, value):
         if "@" in value:
             serializers.ValidationError("Invalid Title")
@@ -55,19 +74,6 @@ class WatchlistSerializer(serializers.Serializer):
                 "Length of thetitle is bigger than storyline"
             )
         return super().validate(data)
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get("title", instance.title)
-        instance.storyline = validated_data.get("storyline", instance.storyline)
-        instance.active = instance.title = validated_data.get("active", instance.active)
-        instance.platform = validated_data.get("platform", instance.platform)
-        instance.imdb_rating = validated_data.get("imdb_rating", instance.imdb_rating)
-        instance.created = validated_data.get("created", instance.created)
-        instance.episodes = validated_data.get("episodes", instance.episodes)
-        instance.category = validated_data.get("category", instance.category)
-        instance.title = validated_data.get("storyline", instance.storyline)
-        instance.save()
-        return instance
 
 
 class ReviewSerializer(serializers.Serializer):

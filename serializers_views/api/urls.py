@@ -9,13 +9,23 @@ urlpatterns = [
         name="watchlist-basic-serializer",
     ),
     path(
-        "review-basic-serializer/",
-        views.ReviewBasicSerializerView.as_view(),
-        name="review-basic-serializer",
+        "watchlist-basic-serializer/<int:pk>/",
+        views.WatchlistBasicSerializerView.as_view(),
+        name="watchlist-detail-basic-serializer",
     ),
     path(
-        "stream-platform-basic-serializer/<int:pk>/",
-        views.StreamPlatformBasicSerializerView.as_view(),
-        name="streamplatform-detail-basic-serializer",
+        "watchlist-model-serializer/",
+        views.WatchlistModelSerializerView.as_view(),
+        name="watchlist-model-serializer",
+    ),
+    path(
+        "watchlist-model-serializer/<int:pk>/",
+        views.WatchlistModelSerializerView.as_view(),
+        name="watchlist-detail-model-serializer",
+    ),
+    path(
+        "reviewlist-basic-serializer/",
+        views.ReviewBasicSerializerView.as_view(),
+        name="reviewlist-basic-serializer",
     ),
 ]
