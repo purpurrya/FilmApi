@@ -53,4 +53,9 @@ urlpatterns = [
         views.ReviewBasicSerializerView.as_view(),
         name="reviewlist-basic-serializer",
     ),
+    path(
+        "watchlist-base-serializer/",
+        views.WatchlistBaseSerializerView.as_view(),
+        name="watchlist-base-serializer",
+    ),
 ]

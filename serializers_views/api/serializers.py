@@ -50,6 +50,46 @@ class WatchlistModelSerializer(serializers.ModelSerializer):
         return super().validate(data)
 
 
+class WatchlistBaseSerializer(serializers.BaseSerializer):
+    def to_representation(self, instance):
+        return {
+            "title": instance.title,
+            "platform": instance.platform.name,
+            "category": instance.category,
+        }
+
+    def to_internal_value(self, data):
+        instance_data = data["resource"]
+        title = instance_data.get("title")
+        storyline = instance_data.get("storyline")
+        category = instance_data.get("category")
+        imdb_rating = instance_data.get("imdb_rating")
+        created = instance_data.get("created")
+        platform = instance_data.get("platform")
+        platform = StreamPlatform.objects.filter(name=platform).first()
+        if not title:
+            raise serializers.ValidationError({"title": "This field is required"})
+        if not category:
+            raise serializers.ValidationError({"category": "This field is required"})
+        if not platform:
+            raise serializers.ValidationError(
+                {"platform": "Valid platform name is required"}
+            )
+        if len(title) > 50:
+            raise serializers.ValidationError({"title": "Title is too long"})
+        return {
+            "title": title,
+            "category": category,
+            "platform": platform,
+            "storyline": storyline,
+            "imdb_rating": imdb_rating,
+            "created": created,
+        }
+
+    def create(self, validated_data):
+        return WatchList.objects.create(**validated_data)
+
+
 class StreamPlatformSerializer(serializers.Serializer):
     class Meta:
         model = StreamPlatform

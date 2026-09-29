@@ -1,6 +1,7 @@
 # FilmApi
 
-Пет-проект, выполненный на основе руководства Патиля Ганешкумара "Django Rest API's Demystified" и представляющий собой API для учёта фильмов и сериалов: стриминговые платформы, список к просмотру и отзывы. Одни и те же сущности намеренно реализованы через разные подходы DRF.
+Пет-проект для практики по Django REST Framework.
+API для учёта фильмов и сериалов: платформы стриминга, список к просмотру (watchlist) и отзывы. Одни и те же сущности намеренно реализованы через разные подходы DRF — обычный `Serializer`, `ModelSerializer`, `HyperlinkedModelSerializer` и кастомный `ListSerializer` — чтобы на практике сравнить их между собой.
 
 ## Технологии
 
@@ -8,6 +9,7 @@
 - Django
 - Django REST Framework
 - SQLite
+- python-decouple
 - ruff
 - pre-commit
 - uv
@@ -21,6 +23,14 @@
 git clone https://github.com/purpurrya/FilmApi.git
 cd FilmApi
 ```
+
+### Настройка окружения
+
+```bash
+cp .env.example .env
+```
+
+В `.env` нужно задать `DJANGO_SECRET_KEY` (любую случайную строку).
 
 ### Docker
 
@@ -92,12 +102,16 @@ uv run ruff format
 
 ### Watchlist — `HyperlinkedModelSerializer`
 
-- `GET /wathclist-hm-serializer/` — список
-- `POST /wathclist-hm-serializer/` — создание
-- `GET /wathclist-detail-hm-serializer/<pk>/` — детальная информация
-- `PUT /wathclist-detail-hm-serializer/<pk>/` — полное обновление
-- `PATCH /wathclist-detail-hm-serializer/<pk>/` — частичное обновление
-- `DELETE /wathclist-detail-hm-serializer/<pk>/` — удаление
+- `GET /watchlist-hm-serializer/` — список
+- `POST /watchlist-hm-serializer/` — создание
+- `GET /watchlist-detail-hm-serializer/<pk>/` — детальная информация
+- `PUT /watchlist-detail-hm-serializer/<pk>/` — полное обновление
+- `PATCH /watchlist-detail-hm-serializer/<pk>/` — частичное обновление
+- `DELETE /watchlist-detail-hm-serializer/<pk>/` — удаление
+
+### Watchlist — `BaseSerializer`
+
+- `GET /watchlist-base-serializer/` — список (кастомная сериализация через `to_representation`/`to_internal_value`)
 
 ### Stream Platform
 

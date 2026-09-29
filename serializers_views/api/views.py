@@ -53,6 +53,13 @@ class WatchlistBasicSerializerView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class WatchlistBaseSerializerView(APIView):
+    def get(self, request, format=None):
+        watchlist = WatchList.objects.all()
+        serializer = serializers.WatchlistBaseSerializer(watchlist, many=True)
+        return Response(serializer.data)
+
+
 class WatchlistModelSerializerView(APIView):
     def get(self, request, format=None):
         watchlist = WatchList.objects.all()
