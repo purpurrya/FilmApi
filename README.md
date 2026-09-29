@@ -1,4 +1,4 @@
-# FilmApi
+# FilmPlatform
 
 Пет-проект для практики по Django REST Framework.
 API для учёта фильмов и сериалов: платформы стриминга, список к просмотру (watchlist) и отзывы. Одни и те же сущности намеренно реализованы через разные подходы DRF — обычный `Serializer`, `ModelSerializer`, `HyperlinkedModelSerializer` и кастомный `ListSerializer` — чтобы на практике сравнить их между собой.
@@ -20,8 +20,8 @@ API для учёта фильмов и сериалов: платформы с�
 ### Клонирование репозитория
 
 ```bash
-git clone https://github.com/purpurrya/FilmApi.git
-cd FilmApi
+git clone https://github.com/purpurrya/FilmPlatform.git
+cd FilmPlatform
 ```
 
 ### Настройка окружения
@@ -112,6 +112,12 @@ uv run ruff format
 ### Watchlist — `BaseSerializer`
 
 - `GET /watchlist-base-serializer/` — список (кастомная сериализация через `to_representation`/`to_internal_value`)
+
+### Watchlist — `GenericAPIView`
+
+- `GET /watchlist-generic-api/` — список (с поиском, сортировкой и пагинацией)
+- `POST /watchlist-generic-api/` — создание
+- `GET /watchlist-detail-generic-api/<title>/` — объект по названию (`title` как lookup-поле)
 
 ### Stream Platform
 

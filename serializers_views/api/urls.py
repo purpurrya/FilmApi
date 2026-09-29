@@ -58,4 +58,14 @@ urlpatterns = [
         views.WatchlistBaseSerializerView.as_view(),
         name="watchlist-base-serializer",
     ),
+    path(
+        "watchlist-generic-api/",
+        views.WatchlistGAPIView.as_view(),
+        name="watchlist-generic-api",
+    ),
+    path(
+        "watchlist-detail-generic-api/<str:title>/",
+        views.WatchlistDetailGAPIView.as_view(),
+        name="watchlist-detail-generic-api",
+    ),
 ]

@@ -50,6 +50,14 @@ class WatchlistModelSerializer(serializers.ModelSerializer):
         return super().validate(data)
 
 
+class WatchlistModelBasicSerializer(serializers.ModelSerializer):
+    platform = serializers.StringRelatedField()
+
+    class Meta:
+        model = WatchList
+        fields = ("title", "platform", "imdb_rating", "created")
+
+
 class WatchlistBaseSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
         return {
