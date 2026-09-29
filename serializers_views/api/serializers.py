@@ -109,7 +109,7 @@ class WatchlistSerializer(serializers.Serializer):
         return instance
 
 
-class WathclistHMSerializer(serializers.HyperlinkedModelSerializer):
+class WatchlistHMSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = WatchList
         fields = "__all__"

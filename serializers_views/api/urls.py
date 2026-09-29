@@ -29,14 +29,14 @@ urlpatterns = [
         name="watchlist-list-serializer",
     ),
     path(
-        "wathclist-hm-serializer/",
+        "watchlist-hm-serializer/",
         views.WatchlistHMSerializerView.as_view(),
-        name="wachlist-hm-serializer",
+        name="watchlist-hm-serializer",
     ),
     path(
-        "wathclist-detail-hm-serializer/<int:pk>/",
+        "watchlist-detail-hm-serializer/<int:pk>/",
         views.WatchlistDetailHMSerializerView.as_view(),
-        name="wachlist-detail-hm-serializer",
+        name="watchlist-detail-hm-serializer",
     ),
     path(
         "streamplatform-basic-serializer/<int:pk>/",

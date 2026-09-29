@@ -101,7 +101,7 @@ class WatchlistModelSerializerView(APIView):
 class WatchlistHMSerializerView(APIView):
     def get(self, request, format=None):
         watchlist = WatchList.objects.all()
-        serializer = serializers.WathclistHMSerializer(
+        serializer = serializers.WatchlistHMSerializer(
             watchlist, many=True, context={"request": request}
         )
         return Response(serializer.data)
@@ -113,7 +113,7 @@ class WatchlistDetailHMSerializerView(APIView):
             watchlist = WatchList.objects.get(pk=pk)
         except WatchList.DoesNotExist:
             return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
-        serializer = serializers.WathclistHMSerializer(
+        serializer = serializers.WatchlistHMSerializer(
             watchlist, context={"request": request}
         )
         return Response(serializer.data)
@@ -123,7 +123,7 @@ class WatchlistDetailHMSerializerView(APIView):
             watchlist = WatchList.objects.get(pk=pk)
         except WatchList.DoesNotExist:
             raise Http404
-        serializer = serializers.WathclistHMSerializer(
+        serializer = serializers.WatchlistHMSerializer(
             watchlist, data=request.data, context={"request": request}
         )
         if serializer.is_valid():
@@ -136,7 +136,7 @@ class WatchlistDetailHMSerializerView(APIView):
             watchlist = WatchList.objects.get(pk=pk)
         except WatchList.DoesNotExist:
             raise Http404
-        serializer = serializers.WathclistHMSerializer(
+        serializer = serializers.WatchlistHMSerializer(
             watchlist, data=request.data, partial=True, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
