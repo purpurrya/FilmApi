@@ -24,19 +24,29 @@ urlpatterns = [
         name="watchlist-detail-model-serializer",
     ),
     path(
-        "wathclist-hm-serializer",
+        "watchlist-list-serializer/",
+        views.WatchlistListSerializerView.as_view(),
+        name="watchlist-list-serializer",
+    ),
+    path(
+        "wathclist-hm-serializer/",
         views.WatchlistHMSerializerView.as_view(),
         name="wachlist-hm-serializer",
     ),
     path(
-        "wathclist-detail-hm-serializer/<int:pk",
+        "wathclist-detail-hm-serializer/<int:pk>/",
         views.WatchlistDetailHMSerializerView.as_view(),
         name="wachlist-detail-hm-serializer",
     ),
     path(
-        "streamplatform-detail-hm-serializer",
+        "streamplatform-basic-serializer/<int:pk>/",
+        views.StreamPlatformBasicSerializerView.as_view(),
+        name="streamplatform-basic-serializer",
+    ),
+    path(
+        "streamplatform-detail-hm-serializer/<int:pk>/",
         views.StreamPlatformDetailHMSerializerView.as_view(),
-        name="Streamplatform-detail-hm-serializer",
+        name="streamplatform-detail-hm-serializer",
     ),
     path(
         "reviewlist-basic-serializer/",

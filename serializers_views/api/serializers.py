@@ -140,6 +140,30 @@ class StreamPlatformHMSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 
+class CustomWatchlistSerializer(serializers.ListSerializer):
+    update_data: ClassVar = []
+
+    def create(self, validated_data):
+        watchlist = [WatchList(**item) for item in validated_data]
+        result = WatchList.objects.bulk_create(watchlist)
+        return result
+
+
+class WatchlistDemoListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
+        fields = "__all__"
+        extra_kwargs: ClassVar = {
+            "imdb_rating": {
+                "validators": [MinValueValidator(1.0), MaxValueValidator(10.0)]
+            }
+        }
+        list_serializer_class = CustomWatchlistSerializer
+
+    def create(self, validated_data):
+        return WatchList.objects.create(**validated_data)
+
+
 class ReviewSerializer(serializers.Serializer):
     review_user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     rating = serializers.IntegerField()
