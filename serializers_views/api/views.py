@@ -98,6 +98,27 @@ class WatchlistModelSerializerView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class WatchlistHMSerializerView(APIView):
+    def get(self, request, format=None):
+        watchlist = WatchList.objects.all()
+        serializer = serializers.WathclistHMSerializer(
+            watchlist, many=True, context={"request": request}
+        )
+        return Response(serializer.data)
+
+
+class WathclistDetailHMSerializerView(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            platform = StreamPlatform.objects.get(pk=pk)
+        except StreamPlatform.DoesNotExist:
+            return Response({"error": "Not found"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = serializers.StreamPlatformHMSerializer(
+            platform, context={"request": request}
+        )
+        return Response(serializer.data)
+
+
 class ReviewBasicSerializerView(APIView):
     def get(self, request, format=None):
         reviews = Review.objects.all()

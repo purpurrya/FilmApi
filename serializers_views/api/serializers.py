@@ -12,16 +12,18 @@ User = get_user_model()
 
 
 class WatchlistModelSerializer(serializers.ModelSerializer):
+    serializer_related_field = custom_fields.CustomPrimaryKeyRelatedField
+    serializer_choice_field = custom_fields.CustomChoiceField
+
     class Meta:
         model = WatchList
         # fields = "__all__"
-        fields = ("title", "storyline", "platform", "imdb_rating")
+        fields = ("title", "storyline", "platform", "imdb_rating", "category")
         extra_kwargs: ClassVar = {
             "imdb_rating": {
                 "validators": [MinValueValidator(1.0), MaxValueValidator(10.0)]
             }
         }
-        serializer_related_field = custom_fields.CustomPrimaryKeyRelatedField
 
     def validate_title(self, value):
         if "@" in value:
@@ -105,6 +107,37 @@ class WatchlistSerializer(serializers.Serializer):
         instance.title = validated_data.get("storyline", instance.storyline)
         instance.save()
         return instance
+
+
+class WathclistHMSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = WatchList
+        fields = "__all__"
+        extra_kwargs: ClassVar = {
+            "imdb_rating": {
+                "validators": [MinValueValidator(1.0), MaxValueValidator(10.0)]
+            },
+            "platform": {"view_name": "streamplatform-detail-hm-serializer"},
+            "url": {
+                "view_name": "streamplatform-detail-hm-serializer",
+                "lookup_field": "pk",
+            },
+        }
+
+
+class StreamPlatformHMSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = StreamPlatform
+        fields = "__all__"
+        depth = 1
+        extra_kwargs: ClassVar = {
+            "about": {"allow_null": True, "default": ""},
+            "website": {"required": False},
+            "url": {
+                "view_name": "streamplatform-detail-hm-serializer",
+                "lookup_field": "pk",
+            },
+        }
 
 
 class ReviewSerializer(serializers.Serializer):
