@@ -301,6 +301,83 @@ class WatchlistDestroyModelMixinView(generics.GenericAPIView, mixins.DestroyMode
         return self.destroy(request, *args, **kwargs)
 
 
+class WatchlistListAPIView(generics.ListAPIView):
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def get_queryset(self):
+        return WatchList.objects.filter(active=True)
+
+
+class WatchlistCreateAPIView(generics.CreateAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class WatchlistListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def get_queryset(self):
+        return WatchList.objects.filter(active=True)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+
+class WatchlistRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = serializers.WatchlistModelSerializer
+    lookup_field = "title"
+    lookup_url_kwarg = "title"
+
+    def get_queryset(self):
+        return WatchList.objects.filter(active=True)
+
+
+class WatchlistUpdateAPIView(generics.UpdateAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+
+class WatchlistDestroyAPIView(generics.DestroyAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
+class WatchlistRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+
+class WatchlistRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
+class WatchlistRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = serializers.WatchlistModelSerializer
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
 class StreamPlatformBasicSerializerView(APIView):
     def get(self, request, pk):
         try:

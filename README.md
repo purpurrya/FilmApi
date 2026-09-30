@@ -128,6 +128,26 @@ uv run ruff format
 - `PATCH /watchlist-update-model-mixin/<pk>/` — частичное обновление
 - `DELETE /watchlist-destroy-model-mixin/<pk>/` — удаление
 
+### Watchlist — готовые generic-вьюхи (`generics`)
+
+- `GET /watchlist-list-api/` — список
+- `POST /watchlist-create-api/` — создание
+- `GET /watchlist-list-create-api/` — список
+- `POST /watchlist-list-create-api/` — создание
+- `GET /watchlist-retrieve-api/<title>/` — объект по названию (`title` как lookup-поле)
+- `PUT /watchlist-update-api/<pk>/` — полное обновление
+- `PATCH /watchlist-update-api/<pk>/` — частичное обновление
+- `DELETE /watchlist-destroy-api/<pk>/` — удаление
+- `GET /watchlist-retrieve-update-api/<pk>/` — объект по id
+- `PUT /watchlist-retrieve-update-api/<pk>/` — полное обновление
+- `PATCH /watchlist-retrieve-update-api/<pk>/` — частичное обновление
+- `GET /watchlist-retrieve-destroy-api/<pk>/` — объект по id
+- `DELETE /watchlist-retrieve-destroy-api/<pk>/` — удаление
+- `GET /watchlist-retrieve-update-destroy-api/<pk>/` — объект по id
+- `PUT /watchlist-retrieve-update-destroy-api/<pk>/` — полное обновление
+- `PATCH /watchlist-retrieve-update-destroy-api/<pk>/` — частичное обновление
+- `DELETE /watchlist-retrieve-update-destroy-api/<pk>/` — удаление
+
 ### Stream Platform
 
 - `GET /streamplatform-basic-serializer/<pk>/` — платформа по id (обычный `Serializer`)

@@ -79,6 +79,51 @@ urlpatterns = [
         name="watchlist-destroy-model-mixin",
     ),
     path(
+        "watchlist-list-api/",
+        views.WatchlistListAPIView.as_view(),
+        name="watchlist-list-api",
+    ),
+    path(
+        "watchlist-create-api/",
+        views.WatchlistCreateAPIView.as_view(),
+        name="watchlist-create-api",
+    ),
+    path(
+        "watchlist-list-create-api/",
+        views.WatchlistListCreateAPIView.as_view(),
+        name="watchlist-list-create-api",
+    ),
+    path(
+        "watchlist-retrieve-api/<str:title>/",
+        views.WatchlistRetrieveAPIView.as_view(),
+        name="watchlist-retrieve-api",
+    ),
+    path(
+        "watchlist-update-api/<int:pk>/",
+        views.WatchlistUpdateAPIView.as_view(),
+        name="watchlist-update-api",
+    ),
+    path(
+        "watchlist-destroy-api/<int:pk>/",
+        views.WatchlistDestroyAPIView.as_view(),
+        name="watchlist-destroy-api",
+    ),
+    path(
+        "watchlist-retrieve-update-api/<int:pk>/",
+        views.WatchlistRetrieveUpdateAPIView.as_view(),
+        name="watchlist-retrieve-update-api",
+    ),
+    path(
+        "watchlist-retrieve-destroy-api/<int:pk>/",
+        views.WatchlistRetrieveDestroyAPIView.as_view(),
+        name="watchlist-retrieve-destroy-api",
+    ),
+    path(
+        "watchlist-retrieve-update-destroy-api/<int:pk>/",
+        views.WatchlistRetrieveUpdateDestroyAPIView.as_view(),
+        name="watchlist-retrieve-update-destroy-api",
+    ),
+    path(
         "streamplatform-basic-serializer/<int:pk>/",
         views.StreamPlatformBasicSerializerView.as_view(),
         name="streamplatform-basic-serializer",
