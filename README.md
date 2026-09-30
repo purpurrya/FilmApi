@@ -1,7 +1,7 @@
 # FilmPlatform
 
-Пет-проект для практики по Django REST Framework.
-API для учёта фильмов и сериалов: платформы стриминга, список к просмотру (watchlist) и отзывы. Одни и те же сущности намеренно реализованы через разные подходы DRF — обычный `Serializer`, `ModelSerializer`, `HyperlinkedModelSerializer` и кастомный `ListSerializer` — чтобы на практике сравнить их между собой.
+Пет-проект, выполненный на основе руководства Патиля Ганешкумара "Django Rest API's Demystified", представляет собой API для учёта фильмов и сериалов: платформы стриминга, список к просмотру  и отзывы. 
+Одни и те же сущности намеренно реализованы через разные подходы DRF для практики.
 
 ## Технологии
 
@@ -77,7 +77,7 @@ uv run ruff format
 
 ## API
 
-Все пути указаны относительно префикса `/api/serializers_views/`.
+Все пути указаны относительно префикса `/api/serializers_views/`. Роуты и классы вьюх сгруппированы по сущности (Watchlist, Stream Platform, Review), а внутри Watchlist — по используемому подходу DRF, от простого к сложному.
 
 ### Watchlist — базовый `Serializer`
 
@@ -86,6 +86,10 @@ uv run ruff format
 - `PUT /watchlist-basic-serializer/<pk>/` — полное обновление
 - `PATCH /watchlist-basic-serializer/<pk>/` — частичное обновление
 - `DELETE /watchlist-basic-serializer/<pk>/` — удаление
+
+### Watchlist — `BaseSerializer`
+
+- `GET /watchlist-base-serializer/` — список (кастомная сериализация через `to_representation`/`to_internal_value`)
 
 ### Watchlist — `ModelSerializer`
 
@@ -109,15 +113,20 @@ uv run ruff format
 - `PATCH /watchlist-detail-hm-serializer/<pk>/` — частичное обновление
 - `DELETE /watchlist-detail-hm-serializer/<pk>/` — удаление
 
-### Watchlist — `BaseSerializer`
-
-- `GET /watchlist-base-serializer/` — список (кастомная сериализация через `to_representation`/`to_internal_value`)
-
 ### Watchlist — `GenericAPIView`
 
 - `GET /watchlist-generic-api/` — список (с поиском, сортировкой и пагинацией)
 - `POST /watchlist-generic-api/` — создание
 - `GET /watchlist-detail-generic-api/<title>/` — объект по названию (`title` как lookup-поле)
+
+### Watchlist — `GenericAPIView` + `mixins`
+
+- `GET /watchlist-list-model-mixin/` — список
+- `POST /watchlist-create-model-mixin/` — создание
+- `GET /watchlist-retrieve-model-mixin/<pk>/` — объект по id
+- `PUT /watchlist-update-model-mixin/<pk>/` — полное обновление
+- `PATCH /watchlist-update-model-mixin/<pk>/` — частичное обновление
+- `DELETE /watchlist-destroy-model-mixin/<pk>/` — удаление
 
 ### Stream Platform
 

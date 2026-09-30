@@ -14,6 +14,11 @@ urlpatterns = [
         name="watchlist-detail-basic-serializer",
     ),
     path(
+        "watchlist-base-serializer/",
+        views.WatchlistBaseSerializerView.as_view(),
+        name="watchlist-base-serializer",
+    ),
+    path(
         "watchlist-model-serializer/",
         views.WatchlistModelSerializerView.as_view(),
         name="watchlist-model-serializer",
@@ -39,6 +44,41 @@ urlpatterns = [
         name="watchlist-detail-hm-serializer",
     ),
     path(
+        "watchlist-generic-api/",
+        views.WatchlistGAPIView.as_view(),
+        name="watchlist-generic-api",
+    ),
+    path(
+        "watchlist-detail-generic-api/<str:title>/",
+        views.WatchlistDetailGAPIView.as_view(),
+        name="watchlist-detail-generic-api",
+    ),
+    path(
+        "watchlist-list-model-mixin/",
+        views.WatchlistListModelMixinView.as_view(),
+        name="watchlist-list-model-mixin",
+    ),
+    path(
+        "watchlist-create-model-mixin/",
+        views.WatchlistCreateModelMixinView.as_view(),
+        name="watchlist-create-model-mixin",
+    ),
+    path(
+        "watchlist-retrieve-model-mixin/<int:pk>/",
+        views.WatchlistRetrieveModelMixinView.as_view(),
+        name="watchlist-retrieve-model-mixin",
+    ),
+    path(
+        "watchlist-update-model-mixin/<int:pk>/",
+        views.WatchlistUpdateModelMixinView.as_view(),
+        name="watchlist-update-model-mixin",
+    ),
+    path(
+        "watchlist-destroy-model-mixin/<int:pk>/",
+        views.WatchlistDestroyModelMixinView.as_view(),
+        name="watchlist-destroy-model-mixin",
+    ),
+    path(
         "streamplatform-basic-serializer/<int:pk>/",
         views.StreamPlatformBasicSerializerView.as_view(),
         name="streamplatform-basic-serializer",
@@ -52,20 +92,5 @@ urlpatterns = [
         "reviewlist-basic-serializer/",
         views.ReviewBasicSerializerView.as_view(),
         name="reviewlist-basic-serializer",
-    ),
-    path(
-        "watchlist-base-serializer/",
-        views.WatchlistBaseSerializerView.as_view(),
-        name="watchlist-base-serializer",
-    ),
-    path(
-        "watchlist-generic-api/",
-        views.WatchlistGAPIView.as_view(),
-        name="watchlist-generic-api",
-    ),
-    path(
-        "watchlist-detail-generic-api/<str:title>/",
-        views.WatchlistDetailGAPIView.as_view(),
-        name="watchlist-detail-generic-api",
     ),
 ]
